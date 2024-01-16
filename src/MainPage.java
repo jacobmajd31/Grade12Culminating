@@ -26,37 +26,75 @@ public class MainPage extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnAddTaskPage = new javax.swing.JButton();
+        btnViewTaskList = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Task Manager App");
 
-        jButton1.setText("Add Task");
+        btnAddTaskPage.setText("Add/Delete Task");
+        btnAddTaskPage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddTaskPageActionPerformed(evt);
+            }
+        });
+
+        btnViewTaskList.setText("View Task List ");
+        btnViewTaskList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewTaskListActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(115, 115, 115)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel1))
-                .addContainerGap(175, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(btnViewTaskList)
+                        .addGap(77, 77, 77)
+                        .addComponent(btnAddTaskPage))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(136, 136, 136)
+                        .addComponent(jLabel1)))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(33, 33, 33)
                 .addComponent(jLabel1)
-                .addGap(66, 66, 66)
-                .addComponent(jButton1)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addGap(81, 81, 81)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddTaskPage)
+                    .addComponent(btnViewTaskList))
+                .addContainerGap(146, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddTaskPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTaskPageActionPerformed
+        // TODO add your handling code here:
+        AddTaskFrame myFrame2 = new AddTaskFrame();
+        
+        myFrame2.show();
+        dispose();
+        
+        
+    }//GEN-LAST:event_btnAddTaskPageActionPerformed
+
+    private void btnViewTaskListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTaskListActionPerformed
+        // TODO add your handling code here:
+        TaskiListFrame myFrame2 = new TaskiListFrame();
+        
+        myFrame2.show();
+        dispose();
+    }//GEN-LAST:event_btnViewTaskListActionPerformed
 
     /**
      * @param args the command line arguments
@@ -94,7 +132,8 @@ public class MainPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAddTaskPage;
+    private javax.swing.JButton btnViewTaskList;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
