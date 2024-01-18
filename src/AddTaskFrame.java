@@ -189,10 +189,12 @@ public class AddTaskFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddTaskToListActionPerformed
 
     private void btnBackMainFromAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackMainFromAddActionPerformed
-        FileWriter myWriter = null;
+       FileWriter myWriter = null;
+      
         try {
             // TODO add your handling code here:
             myWriter = new FileWriter("masterTaskList.txt");
+            myWriter.write("");
             for (int i = 0;i < taskList.size();i++){
                 myWriter.write(taskList.get(i).toString());
                 

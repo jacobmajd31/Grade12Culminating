@@ -1,10 +1,5 @@
-winter
-120
+ spring 1
+130
 NotStarted
-2025-01-25
-skating
-summer
-120
-NotStarted
-2025-08-25
-biking
+2024-01-25
+winter1
