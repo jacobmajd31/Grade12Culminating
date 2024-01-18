@@ -1,4 +1,5 @@
 
+import java.io.File;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -177,10 +178,10 @@ public class AddTaskFrame extends javax.swing.JFrame {
         LocalDate date = LocalDate.parse(txtDueDate.getText(), formatter);
         String description = txtDescription.getText();
         
-        Task task = new Task(taskName,timeAllocated,"Uncomplete",date,description);
+        Task task = new Task(taskName,timeAllocated,"NotStarted",date,description);
         taskList.add(task);
        
-        System.out.println(taskList);
+        System.out.println(new File(".").getAbsolutePath());
     }//GEN-LAST:event_btnAddTaskToListActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -200,7 +201,7 @@ public class AddTaskFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTimeAllotedActionPerformed
 
     
-    ArrayList<Task> taskList = new ArrayList<Task>();
+    private static ArrayList<Task> taskList = new ArrayList<Task>();
         
     
     /**
