@@ -18,9 +18,9 @@ public class Task {
     private String description;
     
     // Constructor 
-    public Task(String name, int timeNeeded, int timeAllocated, String status, LocalDate dueDate, String description) {
+    public Task(String name, int timeAllocated, String status, LocalDate dueDate, String description) {
         this.name = name;
-        this.timeNeeded = timeNeeded;
+        //this.timeNeeded = timeNeeded;
         this.timeAllocated = timeAllocated;
         this.status = status;
         this.dueDate = dueDate;
