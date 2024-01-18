@@ -1,3 +1,14 @@
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.*;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -12,10 +23,15 @@ public class TaskiListFrame extends javax.swing.JFrame {
     /**
      * Creates new form TaskiListFrame
      */
+    
     public TaskiListFrame() {
         initComponents();
     }
-    
+    private static ArrayList<Task> taskList = new ArrayList<Task>();
+        
+
+        
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,10 +110,14 @@ public class TaskiListFrame extends javax.swing.JFrame {
                         .addComponent(btmSelectTask)
                         .addGap(160, 160, 160))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnReturnhome)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(btnReturnhome)
+                                .addGap(139, 139, 139))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -172,18 +192,41 @@ public class TaskiListFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReturnhomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnhomeActionPerformed
-        // TODO add your handling code here:
-        MainPage myFrame1 = new MainPage();
         
-        myFrame1.show();
-        dispose(); 
+                System.out.println(taskList);
+                taskList.forEach(System.out::println);
+            MainPage myFrame1 = new MainPage();
+            myFrame1.show();
+            dispose();
+            
+       
+        
         
     }//GEN-LAST:event_btnReturnhomeActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    
+    public static void main(String args[]) throws FileNotFoundException, IOException{
+      try (BufferedReader reader = new BufferedReader(new FileReader("masterTaskList.txt"))) {
+            String line;
+            reader.read();
+
+            while ((line = reader.readLine()) != null) {
+                String name = line.trim();
+                int timeAllocated = Integer.parseInt(reader.readLine().trim());
+                String status = reader.readLine().trim();
+                LocalDate dueDate = LocalDate.parse(reader.readLine().trim());
+                String description = reader.readLine().trim();
+
+                Task task = new Task(name, timeAllocated, status, dueDate, description);
+                taskList.add(task);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+       taskList.forEach(System.out::println);
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
