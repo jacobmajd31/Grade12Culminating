@@ -79,5 +79,11 @@ public class Task {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "" + name +"\n" + timeAllocated + "\n" + status + "\n" + dueDate + "\n" + description+"\n";
+    }
+    
 }
 

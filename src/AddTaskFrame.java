@@ -3,6 +3,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -36,7 +40,7 @@ public class AddTaskFrame extends javax.swing.JFrame {
         txtEnterTaskName = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnBackMainFromAdd = new javax.swing.JButton();
         lblDescriptionInput = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();
@@ -60,10 +64,10 @@ public class AddTaskFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Enter Task Info:");
 
-        jButton2.setText("Back");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnBackMainFromAdd.setText("Back");
+        btnBackMainFromAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnBackMainFromAddActionPerformed(evt);
             }
         });
 
@@ -131,7 +135,7 @@ public class AddTaskFrame extends javax.swing.JFrame {
                                         .addGap(0, 0, Short.MAX_VALUE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(btnBackMainFromAdd)
                         .addGap(23, 23, 23)))
                 .addGap(9, 9, 9))
         );
@@ -161,7 +165,7 @@ public class AddTaskFrame extends javax.swing.JFrame {
                             .addComponent(jButton1)
                             .addComponent(btnAddTaskToList))
                         .addGap(30, 30, 30)
-                        .addComponent(jButton2)
+                        .addComponent(btnBackMainFromAdd)
                         .addGap(25, 25, 25))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,17 +184,33 @@ public class AddTaskFrame extends javax.swing.JFrame {
         
         Task task = new Task(taskName,timeAllocated,"NotStarted",date,description);
         taskList.add(task);
-       
-        System.out.println(new File(".").getAbsolutePath());
+        
+        
     }//GEN-LAST:event_btnAddTaskToListActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        MainPage myFrame1 = new MainPage();
+    private void btnBackMainFromAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackMainFromAddActionPerformed
+        FileWriter myWriter = null;
+        try {
+            // TODO add your handling code here:
+            myWriter = new FileWriter("masterTaskList.txt");
+            for (int i = 0;i < taskList.size();i++){
+                myWriter.write(taskList.get(i).toString());
+                
+            }   MainPage myFrame1 = new MainPage();
+            myFrame1.show();
+            dispose();
+            //FileWriter myWriter = new FileWriter("masterTaskList.txt");
+        } catch (IOException ex) {
+            Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                myWriter.close();
+            } catch (IOException ex) {
+                Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         
-        myFrame1.show();
-        dispose(); 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnBackMainFromAddActionPerformed
 
     private void txtDueDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDueDateActionPerformed
         // TODO add your handling code here:
@@ -241,8 +261,8 @@ public class AddTaskFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddTaskToList;
+    private javax.swing.JButton btnBackMainFromAdd;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDescriptionInput;
