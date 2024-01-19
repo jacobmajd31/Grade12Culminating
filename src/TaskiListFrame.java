@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -27,11 +29,35 @@ public class TaskiListFrame extends javax.swing.JFrame {
     public TaskiListFrame() {
         initComponents();
     }
-    private static ArrayList<Task> taskList = new ArrayList<Task>();
-        
+    
 
+        List<Task> tasks = readTasksFromFile("masterTaskList.txt");
+
+        // Print the tasks
         
-        
+        public static List<Task> readTasksFromFile(String filePath) {
+        List<Task> tasks = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String name = line;
+                int timeAllocated = Integer.parseInt(reader.readLine());
+                String status = reader.readLine();
+                LocalDate dueDate = LocalDate.parse(reader.readLine());
+                String description = reader.readLine();
+
+                // Create Task object and add to the list
+                Task task = new Task(name, timeAllocated, status, dueDate, description);
+                tasks.add(task);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return tasks;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -193,12 +219,28 @@ public class TaskiListFrame extends javax.swing.JFrame {
 
     private void btnReturnhomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnhomeActionPerformed
         
-                System.out.println(taskList);
-                taskList.forEach(System.out::println);
-            MainPage myFrame1 = new MainPage();
+                FileWriter myWriter = null;
+      
+        try {
+            // TODO add your handling code here:
+            myWriter = new FileWriter("masterTaskList.txt");
+            myWriter.write("");
+            for (int i = 0;i < tasks.size();i++){
+                myWriter.write(tasks.get(i).toString());
+                
+            }   MainPage myFrame1 = new MainPage();
             myFrame1.show();
             dispose();
-            
+            //FileWriter myWriter = new FileWriter("masterTaskList.txt");
+        } catch (IOException ex) {
+            Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                myWriter.close();
+            } catch (IOException ex) {
+                Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
        
         
         
@@ -209,24 +251,7 @@ public class TaskiListFrame extends javax.swing.JFrame {
      */
     
     public static void main(String args[]) throws FileNotFoundException, IOException{
-      try (BufferedReader reader = new BufferedReader(new FileReader("masterTaskList.txt"))) {
-            String line;
-            reader.read();
-
-            while ((line = reader.readLine()) != null) {
-                String name = line.trim();
-                int timeAllocated = Integer.parseInt(reader.readLine().trim());
-                String status = reader.readLine().trim();
-                LocalDate dueDate = LocalDate.parse(reader.readLine().trim());
-                String description = reader.readLine().trim();
-
-                Task task = new Task(name, timeAllocated, status, dueDate, description);
-                taskList.add(task);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-       taskList.forEach(System.out::println);
+      
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
