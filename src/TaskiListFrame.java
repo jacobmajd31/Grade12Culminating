@@ -127,6 +127,11 @@ public class TaskiListFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txtTaskListDisplay);
 
         btmSelectTask.setText("SelectTask");
+        btmSelectTask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btmSelectTaskActionPerformed(evt);
+            }
+        });
 
         btnReturnhome.setText("Back");
         btnReturnhome.addActionListener(new java.awt.event.ActionListener() {
@@ -349,9 +354,42 @@ public class TaskiListFrame extends javax.swing.JFrame {
         lblStatusOutput.setText("sorted in descending order");
     }//GEN-LAST:event_btnSortDescendingActionPerformed
 
+    private void btmSelectTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmSelectTaskActionPerformed
+      String searchTaskName = txtSelectTask.getText();  // Replace with the actual task name you want to search for
+
+        Task foundTask = searchTaskByName(searchTaskName);
+
+        if (foundTask != null) {
+            System.out.println("Task found: " + foundTask);
+            writeTaskDetailsToFile(foundTask, "tempTask.txt");
+            TaskPageFrame myFrame3 = new TaskPageFrame();
+            myFrame3.show();
+            dispose();
+        } else {
+            lblStatusOutput.setText("Task not found with name: " + searchTaskName);
+        }
+
+    }//GEN-LAST:event_btmSelectTaskActionPerformed
+
+        private static void writeTaskDetailsToFile(Task task, String filename) {
+        try (FileWriter writer = new FileWriter(filename, false)) {
+            writer.write(task.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * @param args the command line arguments
      */
+    public Task searchTaskByName(String name) {
+    for (Task task : tasks) {
+        if (task.getName().equals(name)) {
+            return task;
+        }
+    }
+    return null;
+}
+
     
     public static void main(String args[]) throws FileNotFoundException, IOException{
       

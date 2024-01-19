@@ -1,3 +1,11 @@
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -15,6 +23,31 @@ public class TaskPageFrame extends javax.swing.JFrame {
     public TaskPageFrame() {
         initComponents();
     }
+   
+    Task task = readTaskFromFile("tempTask.txt");
+    
+    public static Task readTaskFromFile(String filePath) {
+    Task task = null;
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        String name = reader.readLine();
+        int timeAllocated = Integer.parseInt(reader.readLine());
+        String status = reader.readLine();
+        LocalDate dueDate = LocalDate.parse(reader.readLine());
+        String description = reader.readLine();
+
+        // Create Task object
+        task = new Task(name, timeAllocated, status, dueDate, description);
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    return task;
+}
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,12 +59,19 @@ public class TaskPageFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         lblShowTaskName = new javax.swing.JLabel();
-        txtShowTaskName = new javax.swing.JTextField();
         btnMarkTaskComplete = new javax.swing.JButton();
         btnExport = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnStartTask = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDescriptionDisplay = new javax.swing.JTextArea();
+        lblDisplayTaskName = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         lblShowTaskName.setText("TaskName");
 
@@ -39,51 +79,78 @@ public class TaskPageFrame extends javax.swing.JFrame {
 
         btnExport.setText("Export");
 
-        jButton1.setText("Start Task");
+        btnStartTask.setText("Start Task");
+
+        txtDescriptionDisplay.setColumns(20);
+        txtDescriptionDisplay.setRows(5);
+        jScrollPane1.setViewportView(txtDescriptionDisplay);
+
+        lblDisplayTaskName.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addComponent(lblShowTaskName, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtShowTaskName, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(162, Short.MAX_VALUE))
+                        .addGap(56, 56, 56)
+                        .addComponent(lblShowTaskName, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(23, 23, 23)
+                        .addComponent(btnStartTask)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblDisplayTaskName, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnExport)
-                            .addComponent(btnMarkTaskComplete))
-                        .addGap(100, 100, 100))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnExport)
+                                .addGap(108, 108, 108))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnMarkTaskComplete)
+                                .addGap(46, 46, 46))))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(109, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(61, 61, 61)
+                .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblShowTaskName)
-                    .addComponent(txtShowTaskName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 238, Short.MAX_VALUE)
-                .addComponent(btnExport)
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnMarkTaskComplete)
-                    .addComponent(jButton1))
-                .addGap(81, 81, 81))
+                    .addComponent(lblDisplayTaskName))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnMarkTaskComplete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExport)
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnStartTask)
+                        .addGap(36, 36, 36))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        txtDescriptionDisplay.setText(task.getDetails());
+        lblDisplayTaskName.setText(task.getName());
+    }//GEN-LAST:event_formWindowActivated
+
     /**
      * @param args the command line arguments
      */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -109,6 +176,7 @@ public class TaskPageFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TaskPageFrame().setVisible(true);
@@ -119,8 +187,10 @@ public class TaskPageFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExport;
     private javax.swing.JButton btnMarkTaskComplete;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnStartTask;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblDisplayTaskName;
     private javax.swing.JLabel lblShowTaskName;
-    private javax.swing.JTextField txtShowTaskName;
+    private javax.swing.JTextArea txtDescriptionDisplay;
     // End of variables declaration//GEN-END:variables
 }

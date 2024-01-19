@@ -222,9 +222,25 @@ public class AddTaskFrame extends javax.swing.JFrame {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
         LocalDate date = LocalDate.parse(txtDueDate.getText(), formatter);
         String description = txtDescription.getText();
-        
-        Task task = new Task(taskName,timeAllocated,"NotStarted",date,description);
-        taskList.add(task);
+
+        // Check if a task with the same name already exists
+        boolean taskExists = false;
+        for (Task existingTask : taskList) {
+            if (existingTask.getName().equals(taskName)) {
+                taskExists = true;
+                break;
+            }
+        }
+
+        if (taskExists) {
+            // Display a message that the task already exists
+            lblStatusOutput.setText("Task with the same name already exists. Cannot add task with the same name.");
+        } else {
+            // Create and add the new task
+            Task task = new Task(taskName, timeAllocated, "NotStarted", date, description);
+            taskList.add(task);
+            
+        }
         
         
         
