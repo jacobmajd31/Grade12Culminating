@@ -85,5 +85,8 @@ public class Task {
         return "" + name +"\n" + timeAllocated + "\n" + status + "\n" + dueDate + "\n" + description+"\n";
     }
     
+    public int compareTo(Task other) {
+        return this.dueDate.compareTo(other.getDueDate());
+    }
 }
 

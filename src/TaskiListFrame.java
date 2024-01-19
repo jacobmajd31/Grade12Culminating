@@ -58,6 +58,40 @@ public class TaskiListFrame extends javax.swing.JFrame {
 
         return tasks;
     }
+        
+         public static void recursiveMergeSort(List<Task> tasks, boolean ascending) {
+        if (tasks.size() > 1) {
+            int mid = tasks.size() / 2;
+
+            List<Task> left = new ArrayList<>(tasks.subList(0, mid));
+            List<Task> right = new ArrayList<>(tasks.subList(mid, tasks.size()));
+
+            recursiveMergeSort(left, ascending);
+            recursiveMergeSort(right, ascending);
+
+            merge(tasks, left, right, ascending);
+        }
+    }
+         private static void merge(List<Task> tasks, List<Task> left, List<Task> right, boolean ascending) {
+        int i = 0, j = 0, k = 0;
+
+        while (i < left.size() && j < right.size()) {
+            if ((ascending && left.get(i).compareTo(right.get(j)) <= 0) ||
+                (!ascending && left.get(i).compareTo(right.get(j)) >= 0)) {
+                tasks.set(k++, left.get(i++));
+            } else {
+                tasks.set(k++, right.get(j++));
+            }
+        }
+
+        while (i < left.size()) {
+            tasks.set(k++, left.get(i++));
+        }
+
+        while (j < right.size()) {
+            tasks.set(k++, right.get(j++));
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -101,8 +135,18 @@ public class TaskiListFrame extends javax.swing.JFrame {
         });
 
         btnSortAscending.setText("Ascending");
+        btnSortAscending.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSortAscendingActionPerformed(evt);
+            }
+        });
 
         btnSortDescending.setText("Descending");
+        btnSortDescending.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSortDescendingActionPerformed(evt);
+            }
+        });
 
         lblSortingDirections.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSortingDirections.setText("Sorting Direction");
@@ -228,9 +272,7 @@ public class TaskiListFrame extends javax.swing.JFrame {
             for (int i = 0;i < tasks.size();i++){
                 myWriter.write(tasks.get(i).toString());
                 
-            }   MainPage myFrame1 = new MainPage();
-            myFrame1.show();
-            dispose();
+            }   
             //FileWriter myWriter = new FileWriter("masterTaskList.txt");
         } catch (IOException ex) {
             Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -245,6 +287,56 @@ public class TaskiListFrame extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnReturnhomeActionPerformed
+
+    private void btnSortAscendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortAscendingActionPerformed
+      recursiveMergeSort(tasks, true);
+      FileWriter myWriter = null;
+      
+        try {
+            // TODO add your handling code here:
+            myWriter = new FileWriter("masterTaskList.txt");
+            myWriter.write("");
+            for (int i = 0;i < tasks.size();i++){
+                myWriter.write(tasks.get(i).toString());
+                
+            }  
+            //FileWriter myWriter = new FileWriter("masterTaskList.txt");
+        } catch (IOException ex) {
+            Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                myWriter.close();
+            } catch (IOException ex) {
+                Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnSortAscendingActionPerformed
+
+    private void btnSortDescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortDescendingActionPerformed
+        recursiveMergeSort(tasks, false);
+        FileWriter myWriter = null;
+      
+        try {
+            // TODO add your handling code here:
+            myWriter = new FileWriter("masterTaskList.txt");
+            myWriter.write("");
+            for (int i = 0;i < tasks.size();i++){
+                myWriter.write(tasks.get(i).toString());
+                
+            }   MainPage myFrame1 = new MainPage();
+            myFrame1.show();
+            dispose();
+            //FileWriter myWriter = new FileWriter("masterTaskList.txt");
+        } catch (IOException ex) {
+            Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                myWriter.close();
+            } catch (IOException ex) {
+                Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnSortDescendingActionPerformed
 
     /**
      * @param args the command line arguments

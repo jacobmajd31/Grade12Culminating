@@ -170,11 +170,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ascending"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSortAscendingActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnSortDescending">
       <Properties>
         <Property name="text" type="java.lang.String" value="Descending"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSortDescendingActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblSortingDirections">
       <Properties>
