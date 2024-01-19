@@ -1,10 +1,14 @@
 
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,6 +28,34 @@ public class AddTaskFrame extends javax.swing.JFrame {
      */
     public AddTaskFrame() {
         initComponents();
+    }
+    
+    List<Task> taskList = readTasksFromFile("masterTaskList.txt");
+
+        // Print the taskList
+        
+        public static List<Task> readTasksFromFile(String filePath) {
+        List<Task> taskList = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String name = line;
+                int timeAllocated = Integer.parseInt(reader.readLine());
+                String status = reader.readLine();
+                LocalDate dueDate = LocalDate.parse(reader.readLine());
+                String description = reader.readLine();
+
+                // Create Task object and add to the list
+                Task task = new Task(name, timeAllocated, status, dueDate, description);
+                taskList.add(task);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return taskList;
     }
 
     /**
@@ -48,6 +80,7 @@ public class AddTaskFrame extends javax.swing.JFrame {
         txtTimeAlloted = new javax.swing.JTextField();
         lblDueDate = new javax.swing.JLabel();
         txtDueDate = new javax.swing.JTextField();
+        lblStatusOutput = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,6 +128,8 @@ public class AddTaskFrame extends javax.swing.JFrame {
             }
         });
 
+        lblStatusOutput.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -113,15 +148,23 @@ public class AddTaskFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnBackMainFromAdd)
+                        .addGap(23, 23, 23))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblEnterTaskName)
                             .addComponent(lblDescriptionInput))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEnterTaskName, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtEnterTaskName, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(lblStatusOutput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -132,11 +175,7 @@ public class AddTaskFrame extends javax.swing.JFrame {
                                         .addComponent(lblEnterTimeAlloted)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txtTimeAlloted, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnBackMainFromAdd)
-                        .addGap(23, 23, 23)))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))))
                 .addGap(9, 9, 9))
         );
         layout.setVerticalGroup(
@@ -169,7 +208,9 @@ public class AddTaskFrame extends javax.swing.JFrame {
                         .addGap(25, 25, 25))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(225, Short.MAX_VALUE))))
+                        .addGap(67, 67, 67)
+                        .addComponent(lblStatusOutput)
+                        .addContainerGap(141, Short.MAX_VALUE))))
         );
 
         pack();
@@ -185,6 +226,13 @@ public class AddTaskFrame extends javax.swing.JFrame {
         Task task = new Task(taskName,timeAllocated,"NotStarted",date,description);
         taskList.add(task);
         
+        
+        
+        lblStatusOutput.setText("Task Added");
+        txtEnterTaskName.setText("");
+        txtTimeAlloted.setText("");
+        txtDueDate.setText("");
+        txtDescription.setText("");
         
     }//GEN-LAST:event_btnAddTaskToListActionPerformed
 
@@ -223,7 +271,7 @@ public class AddTaskFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTimeAllotedActionPerformed
 
     
-    private static ArrayList<Task> taskList = new ArrayList<Task>();
+    
         
     
     /**
@@ -271,6 +319,7 @@ public class AddTaskFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblDueDate;
     private javax.swing.JLabel lblEnterTaskName;
     private javax.swing.JLabel lblEnterTimeAlloted;
+    private javax.swing.JLabel lblStatusOutput;
     private javax.swing.JTextArea txtDescription;
     private javax.swing.JTextField txtDueDate;
     private javax.swing.JTextField txtEnterTaskName;

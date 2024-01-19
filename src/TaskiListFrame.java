@@ -118,6 +118,7 @@ public class TaskiListFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        lblStatusOutput = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -168,6 +169,8 @@ public class TaskiListFrame extends javax.swing.JFrame {
         jLabel4.setText("Sorting tasks based on date: ");
 
         jLabel5.setText("Select specfic task to display information on seperate page: ");
+
+        lblStatusOutput.setText("jLabel6");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -220,7 +223,10 @@ public class TaskiListFrame extends javax.swing.JFrame {
                                 .addComponent(btnSortAscending)
                                 .addGap(56, 56, 56)
                                 .addComponent(btnSortDescending))
-                            .addComponent(lblSortingDirections, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(lblSortingDirections, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(171, 171, 171)
+                        .addComponent(lblStatusOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -243,7 +249,9 @@ public class TaskiListFrame extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
                     .addComponent(jScrollPane3))
-                .addGap(88, 88, 88)
+                .addGap(50, 50, 50)
+                .addComponent(lblStatusOutput)
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSelectTask, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
@@ -273,6 +281,9 @@ public class TaskiListFrame extends javax.swing.JFrame {
                 myWriter.write(tasks.get(i).toString());
                 
             }   
+            MainPage myFrame1 = new MainPage();
+            myFrame1.show();
+            dispose();
             //FileWriter myWriter = new FileWriter("masterTaskList.txt");
         } catch (IOException ex) {
             Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -310,6 +321,7 @@ public class TaskiListFrame extends javax.swing.JFrame {
                 Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        lblStatusOutput.setText("sorted by ascending order");
     }//GEN-LAST:event_btnSortAscendingActionPerformed
 
     private void btnSortDescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortDescendingActionPerformed
@@ -323,9 +335,7 @@ public class TaskiListFrame extends javax.swing.JFrame {
             for (int i = 0;i < tasks.size();i++){
                 myWriter.write(tasks.get(i).toString());
                 
-            }   MainPage myFrame1 = new MainPage();
-            myFrame1.show();
-            dispose();
+            }   
             //FileWriter myWriter = new FileWriter("masterTaskList.txt");
         } catch (IOException ex) {
             Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -336,6 +346,7 @@ public class TaskiListFrame extends javax.swing.JFrame {
                 Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        lblStatusOutput.setText("sorted in descending order");
     }//GEN-LAST:event_btnSortDescendingActionPerformed
 
     /**
@@ -391,6 +402,7 @@ public class TaskiListFrame extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JLabel lblSortingDirections;
+    private javax.swing.JLabel lblStatusOutput;
     private javax.swing.JTextField txtSelectTask;
     private javax.swing.JTextArea txtTaskListDisplay;
     // End of variables declaration//GEN-END:variables
