@@ -27,8 +27,7 @@ public class Task {
         this.description = description;
     }
     
-    
-    
+   
     
     // Getters
     public String getName() {
