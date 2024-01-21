@@ -305,28 +305,36 @@ public class TaskiListFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReturnhomeActionPerformed
 
     private void btnSortAscendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortAscendingActionPerformed
-      recursiveMergeSort(tasks, true);
-      FileWriter myWriter = null;
-      
+        recursiveMergeSort(tasks, true);
+        FileWriter myWriter = null;
+
         try {
-            // TODO add your handling code here:
             myWriter = new FileWriter("masterTaskList.txt");
             myWriter.write("");
-            for (int i = 0;i < tasks.size();i++){
-                myWriter.write(tasks.get(i).toString());
-                
-            }  
-            //FileWriter myWriter = new FileWriter("masterTaskList.txt");
+
+            // Sort tasks by due date in ascending order
+            tasks.sort(Comparator.comparing(Task::getDueDate));
+
+            // Loop through sorted tasks and append each task's name and due date to the text area
+            for (int i = 0; i < tasks.size(); i++) {
+                Task task = tasks.get(i);
+                txtTaskListDisplay.append(task.getName() + " - Due Date: " + task.getDueDate() + "\n");
+            }
+
+            // FileWriter myWriter = new FileWriter("masterTaskList.txt");
         } catch (IOException ex) {
             Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
-                myWriter.close();
+                if (myWriter != null) {
+                    myWriter.close();
+                }
             } catch (IOException ex) {
                 Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        lblStatusOutput.setText("sorted by ascending order");
+
+        lblStatusOutput.setText("Tasks displayed by due date in ascending order");
     }//GEN-LAST:event_btnSortAscendingActionPerformed
 
     private void btnSortDescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortDescendingActionPerformed

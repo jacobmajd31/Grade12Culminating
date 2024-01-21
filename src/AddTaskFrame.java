@@ -262,9 +262,9 @@ public class AddTaskFrame extends javax.swing.JFrame {
             for (int i = 0;i < taskList.size();i++){
                 myWriter.write(taskList.get(i).toString());
                 
-            }   MainPage myFrame1 = new MainPage();
-            myFrame1.show();
-            dispose();
+                }   MainPage myFrame1 = new MainPage();
+                myFrame1.show();
+                dispose();
             //FileWriter myWriter = new FileWriter("masterTaskList.txt");
         } catch (IOException ex) {
             Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
