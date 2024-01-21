@@ -97,6 +97,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Completed Task"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMarkTaskCompleteActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnExport">
       <Properties>
@@ -107,6 +110,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Start Task"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStartTaskActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>

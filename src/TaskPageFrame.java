@@ -82,10 +82,20 @@ public class TaskPageFrame extends javax.swing.JFrame {
         lblShowTaskName.setText("Task Name: ");
 
         btnMarkTaskComplete.setText("Completed Task");
+        btnMarkTaskComplete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMarkTaskCompleteActionPerformed(evt);
+            }
+        });
 
         btnExport.setText("Export");
 
         btnStartTask.setText("Start Task");
+        btnStartTask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStartTaskActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Back");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -166,6 +176,14 @@ public class TaskPageFrame extends javax.swing.JFrame {
         dispose();
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnStartTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartTaskActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnStartTaskActionPerformed
+
+    private void btnMarkTaskCompleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarkTaskCompleteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnMarkTaskCompleteActionPerformed
 
     /**
      * @param args the command line arguments

@@ -4,12 +4,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.time.LocalDate;
+import java.util.Comparator;
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -102,7 +104,7 @@ public class TaskiListFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtTaskListDisplay = new javax.swing.JTextArea();
+        txtTaskListDisplay1 = new javax.swing.JTextArea();
         btmSelectTask = new javax.swing.JToggleButton();
         txtSelectTask = new javax.swing.JTextField();
         btnReturnhome = new javax.swing.JButton();
@@ -110,9 +112,9 @@ public class TaskiListFrame extends javax.swing.JFrame {
         btnSortDescending = new javax.swing.JButton();
         lblSortingDirections = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtTaskListDisplay2 = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        txtTaskListDisplay3 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -122,9 +124,9 @@ public class TaskiListFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        txtTaskListDisplay.setColumns(20);
-        txtTaskListDisplay.setRows(5);
-        jScrollPane1.setViewportView(txtTaskListDisplay);
+        txtTaskListDisplay1.setColumns(20);
+        txtTaskListDisplay1.setRows(5);
+        jScrollPane1.setViewportView(txtTaskListDisplay1);
 
         btmSelectTask.setText("SelectTask");
         btmSelectTask.addActionListener(new java.awt.event.ActionListener() {
@@ -157,17 +159,17 @@ public class TaskiListFrame extends javax.swing.JFrame {
         lblSortingDirections.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSortingDirections.setText("Sorting Direction");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        txtTaskListDisplay2.setColumns(20);
+        txtTaskListDisplay2.setRows(5);
+        jScrollPane2.setViewportView(txtTaskListDisplay2);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane3.setViewportView(jTextArea2);
+        txtTaskListDisplay3.setColumns(20);
+        txtTaskListDisplay3.setRows(5);
+        jScrollPane3.setViewportView(txtTaskListDisplay3);
 
         jLabel1.setText("Not Started");
 
-        jLabel2.setText("In progress");
+        jLabel2.setText("Started");
 
         jLabel3.setText("Completed");
 
@@ -211,9 +213,9 @@ public class TaskiListFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(98, 98, 98)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(183, 183, 183)
                 .addComponent(jLabel2)
-                .addGap(172, 172, 172)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(140, 140, 140))
             .addGroup(layout.createSequentialGroup()
@@ -305,6 +307,8 @@ public class TaskiListFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReturnhomeActionPerformed
 
     private void btnSortAscendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortAscendingActionPerformed
+       
+// ...
         recursiveMergeSort(tasks, true);
         FileWriter myWriter = null;
 
@@ -315,10 +319,26 @@ public class TaskiListFrame extends javax.swing.JFrame {
             // Sort tasks by due date in ascending order
             tasks.sort(Comparator.comparing(Task::getDueDate));
 
-            // Loop through sorted tasks and append each task's name and due date to the text area
+            // Loop through sorted tasks and append each task's name and due date to the corresponding text area
             for (int i = 0; i < tasks.size(); i++) {
                 Task task = tasks.get(i);
-                txtTaskListDisplay.append(task.getName() + " - Due Date: " + task.getDueDate() + "\n");
+                String taskInfo = task.getName() + " - Due Date: " + task.getDueDate() + "\n";
+
+                // Determine which text area to append to based on the task's status
+                switch (task.getStatus()) {
+                    case "Not Started":
+                        txtTaskListDisplay1.append(taskInfo);
+                        break;
+                    case "Started":
+                        txtTaskListDisplay2.append(taskInfo);
+                        break;
+                    case "Completed":
+                        txtTaskListDisplay3.append(taskInfo);
+                        break;
+                    default:
+                        // Handle unexpected status values if necessary
+                        break;
+                }
             }
 
             // FileWriter myWriter = new FileWriter("masterTaskList.txt");
@@ -334,7 +354,7 @@ public class TaskiListFrame extends javax.swing.JFrame {
             }
         }
 
-        lblStatusOutput.setText("Tasks displayed by due date in ascending order");
+        lblStatusOutput.setText("Tasks displayed by due date and status");
     }//GEN-LAST:event_btnSortAscendingActionPerformed
 
     private void btnSortDescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortDescendingActionPerformed
@@ -445,11 +465,11 @@ public class TaskiListFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JLabel lblSortingDirections;
     private javax.swing.JLabel lblStatusOutput;
     private javax.swing.JTextField txtSelectTask;
-    private javax.swing.JTextArea txtTaskListDisplay;
+    private javax.swing.JTextArea txtTaskListDisplay1;
+    private javax.swing.JTextArea txtTaskListDisplay2;
+    private javax.swing.JTextArea txtTaskListDisplay3;
     // End of variables declaration//GEN-END:variables
 }
