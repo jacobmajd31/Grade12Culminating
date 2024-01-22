@@ -315,28 +315,33 @@ public class TaskiListFrame extends javax.swing.JFrame {
         try {
             myWriter = new FileWriter("masterTaskList.txt");
             myWriter.write("");
+            for (int i = 0;i < tasks.size();i++){
+                myWriter.write(tasks.get(i).toString());
+                
+            }
 
             // Sort tasks by due date in ascending order
             tasks.sort(Comparator.comparing(Task::getDueDate));
 
             // Loop through sorted tasks and append each task's name and due date to the corresponding text area
+            txtTaskListDisplay1.setText("");
             for (int i = 0; i < tasks.size(); i++) {
                 Task task = tasks.get(i);
                 String taskInfo = task.getName() + " - Due Date: " + task.getDueDate() + "\n";
 
                 // Determine which text area to append to based on the task's status
                 switch (task.getStatus()) {
-                    case "Not Started":
-                        txtTaskListDisplay1.append(taskInfo);
+                    case "NotStarted":
+                        txtTaskListDisplay1.append("\n"+taskInfo);
                         break;
                     case "Started":
-                        txtTaskListDisplay2.append(taskInfo);
+                        txtTaskListDisplay2.append("\n"+taskInfo);
                         break;
                     case "Completed":
-                        txtTaskListDisplay3.append(taskInfo);
+                        txtTaskListDisplay3.append("\n"+taskInfo);
                         break;
                     default:
-                        // Handle unexpected status values if necessary
+                        
                         break;
                 }
             }
@@ -368,7 +373,28 @@ public class TaskiListFrame extends javax.swing.JFrame {
             for (int i = 0;i < tasks.size();i++){
                 myWriter.write(tasks.get(i).toString());
                 
-            }   
+            }  
+            txtTaskListDisplay1.setText("");
+            for (int i = 0; i < tasks.size(); i++) {
+                Task task = tasks.get(i);
+                String taskInfo = task.getName() + " - Due Date: " + task.getDueDate() + "\n";
+
+                // Determine which text area to append to based on the task's status
+                switch (task.getStatus()) {
+                    case "Not Started":
+                        txtTaskListDisplay1.append("\n"+taskInfo);
+                        break;
+                    case "Started":
+                        txtTaskListDisplay2.append("\n"+taskInfo);
+                        break;
+                    case "Completed":
+                        txtTaskListDisplay3.append("\n"+taskInfo);
+                        break;
+                    default:
+                        txtTaskListDisplay1.append("\n"+ taskInfo);
+                        break;
+                }
+            }
             //FileWriter myWriter = new FileWriter("masterTaskList.txt");
         } catch (IOException ex) {
             Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
