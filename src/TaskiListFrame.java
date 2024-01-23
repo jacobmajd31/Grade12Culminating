@@ -435,7 +435,7 @@ public class TaskiListFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btmSelectTaskActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        List<Task> tasks = readTasksFromFile("masterTaskList.txt");
+       
     }//GEN-LAST:event_formWindowActivated
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -474,6 +474,7 @@ public class TaskiListFrame extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public Task searchTaskByName(String name) {
+        List<Task> tasks = readTasksFromFile("masterTaskList.txt");
     for (Task task : tasks) {
         if (task.getName().equals(name)) {
             return task;

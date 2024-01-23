@@ -260,18 +260,28 @@ public class TaskPageFrame extends javax.swing.JFrame {
 
     private void btnStartTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartTaskActionPerformed
        String nameToSearch = task.getName();
+       if(task.getStatus() != "Started"){
        task.setStatus("Started");
         deleteTaskByName(taskList, nameToSearch);
         taskList.add(task);
         txtError.setText("task marked as Started");
+       }
+       else{
+           txtError.setText("Task has already been started");
+       }
     }//GEN-LAST:event_btnStartTaskActionPerformed
 
     private void btnMarkTaskCompleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarkTaskCompleteActionPerformed
         String nameToSearch = task.getName();
         deleteTaskByName(taskList, nameToSearch);
+        if(task.getStatus() != "Completed"){
         task.setStatus("Completed");
         taskList.add(task);
         txtError.setText("task marked as Completed");
+        }
+        else{
+            txtError.setText("Task is already completed");
+        }
     }//GEN-LAST:event_btnMarkTaskCompleteActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
