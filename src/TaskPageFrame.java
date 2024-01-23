@@ -1,8 +1,11 @@
 
+import java.awt.Desktop;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -91,7 +94,7 @@ public class TaskPageFrame extends javax.swing.JFrame {
         btnMarkTaskComplete = new javax.swing.JButton();
         btnExport = new javax.swing.JButton();
         btnStartTask = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         lblTaskName = new javax.swing.JLabel();
         txtError = new javax.swing.JTextField();
@@ -120,6 +123,11 @@ public class TaskPageFrame extends javax.swing.JFrame {
         });
 
         btnExport.setText("Export");
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportActionPerformed(evt);
+            }
+        });
 
         btnStartTask.setText("Start Task");
         btnStartTask.addActionListener(new java.awt.event.ActionListener() {
@@ -128,10 +136,10 @@ public class TaskPageFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Back");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
 
@@ -177,7 +185,7 @@ public class TaskPageFrame extends javax.swing.JFrame {
                                 .addGap(60, 60, 60)
                                 .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addComponent(btnBack)
                                 .addGap(123, 123, 123)
                                 .addComponent(btnDelete)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
@@ -209,7 +217,7 @@ public class TaskPageFrame extends javax.swing.JFrame {
                 .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnBack)
                     .addComponent(btnExport)
                     .addComponent(btnDelete))
                 .addGap(30, 30, 30))
@@ -222,7 +230,7 @@ public class TaskPageFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_formWindowActivated
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         
         FileWriter myWriter = null;
@@ -248,7 +256,7 @@ public class TaskPageFrame extends javax.swing.JFrame {
                 Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnStartTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartTaskActionPerformed
        String nameToSearch = task.getName();
@@ -276,6 +284,28 @@ public class TaskPageFrame extends javax.swing.JFrame {
          deleteTaskByName(taskList, nameToSearch);
          txtError.setText("Task Has Been Deleted");
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+       String filePath = "tempTask.txt";
+
+        try {
+            File fileToOpen = new File(filePath);
+
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
+                Desktop.getDesktop().open(fileToOpen);
+            } else {
+                System.out.println("Opening files not supported on this platform.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+      
+
+        
+    
+
+    
+    }//GEN-LAST:event_btnExportActionPerformed
 
     /**
      * @param args the command line arguments
@@ -326,11 +356,11 @@ public class TaskPageFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExport;
     private javax.swing.JButton btnMarkTaskComplete;
     private javax.swing.JButton btnStartTask;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
