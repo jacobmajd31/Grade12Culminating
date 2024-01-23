@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,8 +50,33 @@ public class TaskPageFrame extends javax.swing.JFrame {
     return task;
 }
     
-    
-    
+    List<Task> taskList = readTasksFromFileArray("masterTaskList.txt");
+        // Print the taskList
+        
+        public static List<Task> readTasksFromFileArray(String filePath) {
+        List<Task> taskList = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String name = line;
+                int timeAllocated = Integer.parseInt(reader.readLine());
+                String status = reader.readLine();
+                LocalDate dueDate = LocalDate.parse(reader.readLine());
+                String description = reader.readLine();
+
+                // Create Task object and add to the list
+                Task task2 = new Task(name, timeAllocated, status, dueDate, description);
+                taskList.add(task2);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return taskList;
+    }
+        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -76,6 +102,9 @@ public class TaskPageFrame extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -153,9 +182,9 @@ public class TaskPageFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnStartTask)
                     .addComponent(btnMarkTaskComplete))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(btnExport))
@@ -171,24 +200,65 @@ public class TaskPageFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        MainPage myFrame1 = new MainPage();
-        myFrame1.show();
-        dispose();
         
+        FileWriter myWriter = null;
+      
+        try {
+            // TODO add your handling code here:
+            myWriter = new FileWriter("masterTaskList.txt");
+            myWriter.write("");
+            for (int i = 0;i < taskList.size();i++){
+                myWriter.write(taskList.get(i).toString());
+                
+                }   
+                    TaskiListFrame myFrame1 = new TaskiListFrame();
+                    myFrame1.show();
+                    dispose();
+            //FileWriter myWriter = new FileWriter("masterTaskList.txt");
+        } catch (IOException ex) {
+            Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                myWriter.close();
+            } catch (IOException ex) {
+                Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnStartTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartTaskActionPerformed
-        // TODO add your handling code here:
+       String nameToSearch = task.getName();
+       task.setStatus("Started");
+        deleteTaskByName(taskList, nameToSearch);
+        taskList.add(task);
     }//GEN-LAST:event_btnStartTaskActionPerformed
 
     private void btnMarkTaskCompleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarkTaskCompleteActionPerformed
-        // TODO add your handling code here:
+        String nameToSearch = task.getName();
+        deleteTaskByName(taskList, nameToSearch);
+        task.setStatus("Completed");
+        taskList.add(task);
     }//GEN-LAST:event_btnMarkTaskCompleteActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        lblTaskName.setText(task.getName());
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
      */
-    
+   private static void deleteTaskByName(List<Task> taskList, String name) {
+        Iterator<Task> iterator = taskList.iterator();
+
+        while (iterator.hasNext()) {
+            Task task = iterator.next();
+            // Modify the condition to check against the 'name' property
+            if (task.getName().equals(name)) {
+                iterator.remove();
+                break; // Optional: If you want to stop after deleting the first occurrence
+            }
+        }
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -123,6 +123,11 @@ public class TaskiListFrame extends javax.swing.JFrame {
         lblStatusOutput = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         txtTaskListDisplay1.setColumns(20);
         txtTaskListDisplay1.setRows(5);
@@ -278,29 +283,11 @@ public class TaskiListFrame extends javax.swing.JFrame {
 
     private void btnReturnhomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnhomeActionPerformed
         
-                FileWriter myWriter = null;
-      
-        try {
-            // TODO add your handling code here:
-            myWriter = new FileWriter("masterTaskList.txt");
-            myWriter.write("");
-            for (int i = 0;i < tasks.size();i++){
-                myWriter.write(tasks.get(i).toString());
-                
-            }   
+                 
             MainPage myFrame1 = new MainPage();
             myFrame1.show();
             dispose();
-            //FileWriter myWriter = new FileWriter("masterTaskList.txt");
-        } catch (IOException ex) {
-            Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                myWriter.close();
-            } catch (IOException ex) {
-                Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+            
        
         
         
@@ -311,20 +298,37 @@ public class TaskiListFrame extends javax.swing.JFrame {
 // ...
         recursiveMergeSort(tasks, true);
         FileWriter myWriter = null;
+        List<Task> tasks = readTasksFromFile("masterTaskList.txt");
 
+        
+      
         try {
+            // TODO add your handling code here:
             myWriter = new FileWriter("masterTaskList.txt");
             myWriter.write("");
             for (int i = 0;i < tasks.size();i++){
                 myWriter.write(tasks.get(i).toString());
                 
+            }   
+            
+                
+            } catch (IOException ex) {
+            Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                myWriter.close();
+            } catch (IOException ex) {
+                Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
 
             // Sort tasks by due date in ascending order
             tasks.sort(Comparator.comparing(Task::getDueDate));
 
             // Loop through sorted tasks and append each task's name and due date to the corresponding text area
             txtTaskListDisplay1.setText("");
+            txtTaskListDisplay2.setText("");
+            txtTaskListDisplay3.setText("");
             for (int i = 0; i < tasks.size(); i++) {
                 Task task = tasks.get(i);
                 String taskInfo = task.getName() + " - Due Date: " + task.getDueDate() + "\n";
@@ -347,33 +351,39 @@ public class TaskiListFrame extends javax.swing.JFrame {
             }
 
             // FileWriter myWriter = new FileWriter("masterTaskList.txt");
-        } catch (IOException ex) {
-            Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (myWriter != null) {
-                    myWriter.close();
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        
 
         lblStatusOutput.setText("Tasks displayed by due date and status");
     }//GEN-LAST:event_btnSortAscendingActionPerformed
 
     private void btnSortDescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortDescendingActionPerformed
         recursiveMergeSort(tasks, false);
+        List<Task> tasks = readTasksFromFile("masterTaskList.txt");
         FileWriter myWriter = null;
-      
-        try {
+      try {
             // TODO add your handling code here:
             myWriter = new FileWriter("masterTaskList.txt");
             myWriter.write("");
             for (int i = 0;i < tasks.size();i++){
                 myWriter.write(tasks.get(i).toString());
                 
-            }  
+            }   
+            
+                
+            } catch (IOException ex) {
+            Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                myWriter.close();
+            } catch (IOException ex) {
+                Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+            // TODO add your handling code here:
+            txtTaskListDisplay1.setText("");
+            txtTaskListDisplay2.setText("");
+            txtTaskListDisplay3.setText("");
             txtTaskListDisplay1.setText("");
             for (int i = 0; i < tasks.size(); i++) {
                 Task task = tasks.get(i);
@@ -396,15 +406,11 @@ public class TaskiListFrame extends javax.swing.JFrame {
                 }
             }
             //FileWriter myWriter = new FileWriter("masterTaskList.txt");
-        } catch (IOException ex) {
-            Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                myWriter.close();
-            } catch (IOException ex) {
-                Logger.getLogger(AddTaskFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+         
+            
+         
+             
+        
         lblStatusOutput.setText("sorted in descending order");
     }//GEN-LAST:event_btnSortDescendingActionPerformed
 
@@ -424,6 +430,10 @@ public class TaskiListFrame extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btmSelectTaskActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        List<Task> tasks = readTasksFromFile("masterTaskList.txt");
+    }//GEN-LAST:event_formWindowActivated
 
         private static void writeTaskDetailsToFile(Task task, String filename) {
         try (FileWriter writer = new FileWriter(filename, false)) {
