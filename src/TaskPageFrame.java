@@ -153,7 +153,6 @@ public class TaskPageFrame extends javax.swing.JFrame {
                         .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel3)
                                 .addGroup(layout.createSequentialGroup()
@@ -169,7 +168,10 @@ public class TaskPageFrame extends javax.swing.JFrame {
                                 .addGap(197, 197, 197)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(btnMarkTaskComplete)
-                                    .addComponent(btnExport)))))
+                                    .addComponent(btnExport)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(84, 84, 84)
                         .addComponent(lblDescriptionDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -193,9 +195,9 @@ public class TaskPageFrame extends javax.swing.JFrame {
                     .addComponent(btnMarkTaskComplete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addComponent(lblDescriptionDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addGap(18, 18, 18)
                 .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(btnExport))
@@ -242,6 +244,7 @@ public class TaskPageFrame extends javax.swing.JFrame {
        task.setStatus("Started");
         deleteTaskByName(taskList, nameToSearch);
         taskList.add(task);
+        txtError.setText("task marked as Started");
     }//GEN-LAST:event_btnStartTaskActionPerformed
 
     private void btnMarkTaskCompleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarkTaskCompleteActionPerformed
@@ -249,6 +252,7 @@ public class TaskPageFrame extends javax.swing.JFrame {
         deleteTaskByName(taskList, nameToSearch);
         task.setStatus("Completed");
         taskList.add(task);
+        txtError.setText("task marked as Completed");
     }//GEN-LAST:event_btnMarkTaskCompleteActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened

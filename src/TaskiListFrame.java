@@ -127,6 +127,9 @@ public class TaskiListFrame extends javax.swing.JFrame {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
         });
 
         txtTaskListDisplay1.setColumns(20);
@@ -434,6 +437,10 @@ public class TaskiListFrame extends javax.swing.JFrame {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         List<Task> tasks = readTasksFromFile("masterTaskList.txt");
     }//GEN-LAST:event_formWindowActivated
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        lblStatusOutput.setText("");
+    }//GEN-LAST:event_formWindowOpened
 
         private static void writeTaskDetailsToFile(Task task, String filename) {
         try (FileWriter writer = new FileWriter(filename, false)) {
