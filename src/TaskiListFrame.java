@@ -440,6 +440,27 @@ public class TaskiListFrame extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         lblStatusOutput.setText("");
+        List<Task> tasks = readTasksFromFile("masterTaskList.txt");
+        for (int i = 0; i < tasks.size(); i++) {
+                Task task = tasks.get(i);
+                String taskInfo = task.getName() + " - Due Date: " + task.getDueDate() + "\n";
+
+                // Determine which text area to append to based on the task's status
+                switch (task.getStatus()) {
+                    case "Not Started":
+                        txtTaskListDisplay1.append("\n"+taskInfo);
+                        break;
+                    case "Started":
+                        txtTaskListDisplay2.append("\n"+taskInfo);
+                        break;
+                    case "Completed":
+                        txtTaskListDisplay3.append("\n"+taskInfo);
+                        break;
+                    default:
+                        txtTaskListDisplay1.append("\n"+ taskInfo);
+                        break;
+                }
+            }
     }//GEN-LAST:event_formWindowOpened
 
         private static void writeTaskDetailsToFile(Task task, String filename) {
