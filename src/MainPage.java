@@ -33,7 +33,7 @@ public class MainPage extends javax.swing.JFrame {
 
         jLabel1.setText("Task Manager App");
 
-        btnAddTaskPage.setText("Add/Delete Task");
+        btnAddTaskPage.setText("Add Task");
         btnAddTaskPage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddTaskPageActionPerformed(evt);
@@ -61,7 +61,7 @@ public class MainPage extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(136, 136, 136)
                         .addComponent(jLabel1)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
